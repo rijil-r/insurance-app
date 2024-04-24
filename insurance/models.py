@@ -25,7 +25,7 @@ class Customer(get_user_model()):
 
 
 class Policy(ActivityTrackerMixin):
-    policy_type = models.CharField(max_length=255)
+    policy_type = models.CharField(max_length=255, unique=True)
     age_multiplier = models.DecimalField(max_digits=10, decimal_places=2, default=0.02)
     premium_to_cover_ratio = models.DecimalField(max_digits=10, decimal_places=2)
 
