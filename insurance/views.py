@@ -11,11 +11,11 @@ from insurance.serializers import PolicySerializer, CustomerCreateSerializer, Qu
 
 
 class PolicyFilter(django_filters.FilterSet):
-    customer = django_filters.NumberFilter(field_name='quote__customer')
+    customer_id = django_filters.NumberFilter(field_name='quote__customer')
 
     class Meta:
         model = Policy
-        fields = ['customer']
+        fields = ['customer_id', 'policy_type']
 
 
 # Create your views here.
@@ -34,9 +34,17 @@ class PolicyViewSet(viewsets.ModelViewSet):
             quotes = Quote.objects.filter(policy=pk)
         return Response(QuoteSerializer(quotes, many=True).data)
 
+class CustomerFilter(django_filters.FilterSet):
+    name = django_filters.CharFilter(field_name='first_name')
+    policy = django_filters.NumberFilter(field_name='quote__policy')
+
+    class Meta:
+        model = Customer
+        fields = ['name', 'date_of_birth', 'policy']
+
+
 
 class CustomerCreateView(mixins.CreateModelMixin, GenericViewSet):
-    queryset = Customer.objects.all()
     serializer_class = CustomerCreateSerializer
     permission_classes = [AdminPermission]
 
@@ -62,3 +70,12 @@ class QuoteViewSet(viewsets.ModelViewSet):
         if hasattr(self.request.user, 'customer'):
             return Quote.objects.filter(customer=self.request.user.customer)
         return Quote.objects.all()
+
+
+class CustomerViewSet(mixins.RetrieveModelMixin,
+                       mixins.ListModelMixin,
+                       GenericViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerCreateSerializer
+    permission_classes = [AdminPermission]
+    filterset_class = CustomerFilter
