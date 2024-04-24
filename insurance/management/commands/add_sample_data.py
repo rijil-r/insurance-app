@@ -9,14 +9,14 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Create Customer
         password = 'password'
-        customer = Customer.objects.create(username="john", first_name="John", last_name="Doe",
+        customer = Customer.objects.create(username="johna", first_name="John", last_name="Doe",
                                            email="john.doe@example.com", date_of_birth="1980-01-01",
                                            password=make_password(password))
         print(f"Customer created: {customer}")
         # Create Admin User
         user = get_user_model()
         admin = user.objects.create_superuser(username="admin", first_name="Admin", last_name="User",
-                                              email="admin@example.com", password=make_password(password))
+                                              email="admin@example.com", password=password)
         print(f"Admin user created: {admin}")
         # Create multiple policies
         policy_types = ['Car Insurance', 'Home Insurance', 'Travel Insurance']
