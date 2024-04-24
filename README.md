@@ -35,3 +35,20 @@ Optional: Sample data command
 
     $ python manage.py add_sample_data
 
+#### User credentials (If add_sample_data is executed)
+
+* User 1
+
+username: admin
+
+password: password
+
+role: User
+
+* User 2
+
+username: john
+
+password: password
+
+role: Customer
