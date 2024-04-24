@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Create Customer
         password = 'password'
-        customer = Customer.objects.create(username="johna", first_name="John", last_name="Doe",
+        customer = Customer.objects.create(username="john", first_name="John", last_name="Doe",
                                            email="john.doe@example.com", date_of_birth="1980-01-01",
                                            password=make_password(password))
         print(f"Customer created: {customer}")
